@@ -1,9 +1,12 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const colors = require("colors");
-const morgan = require('morgan');
-const cors = require('cors');
-const {connectDB} = require("./config/db");
+import express from 'express';
+import dotenv from 'dotenv';
+import colors from "colors";
+import morgan from 'morgan';
+import cors from 'cors';
+
+import connectDB from './config/db.js';
+import testRouters from './routes/testRoutes.js';
+import authRouters from './routes/authRouters.js';
 //dot config
 dotenv.config();
 
@@ -22,7 +25,8 @@ app.use(morgan('dev'));
 
 //routes
 //1test
-app.use('/api/v1/test', require('./routes/testRoutes'));
+app.use(`/api/v1/test`, testRouters);
+app.use('/api/v1/auth', authRouters);
 
 //port
 const PORT = process.env.PORT || 8080;

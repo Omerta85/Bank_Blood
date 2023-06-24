@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
     role:{
@@ -45,5 +45,6 @@ const userSchema = new mongoose.Schema({
         required:[true, 'phone number is required']
     }
 }, {timestamps:true});
+const UserModel = mongoose.model('users', userSchema);
 
-module.exports = mongoose.model('users', userSchema)
+export default UserModel;
