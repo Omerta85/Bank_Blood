@@ -1,7 +1,7 @@
 import React from 'react'
 
 import loginImage from "../../assets/images/banner1.jpg"
-import {InputType} from "../../components/shared/Form/InputType";
+import {Form} from "../../components/shared/Form/Form";
 
 const Login = () =>{
     return (
@@ -11,18 +11,11 @@ const Login = () =>{
                     <img src={loginImage} alt="loginImage"/>
                 </div>
                 <div className="col-md-4 form-container">
-                    <form >
-                        <InputType
-                            labelText={"Email"}
-                            labelFor={'forEmail'}
-                            inputTape={'email'}
-                            name={'email'}
-                        />
-                        <button type="submit" className="btn btn-primary">
-                            Submit
-                        </button>
-                    </form>
-
+                    <Form
+                        formTitle={'Login Page'}
+                        submitBtn={"Login"}
+                        formType={'login'}
+                    />
                 </div>
             </div>
         </>
