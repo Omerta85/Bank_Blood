@@ -1,10 +1,16 @@
 import React from "react";
 
-const InputType = ({labelText,inputTape, value,onChange,name}) => {
+const InputType = ({
+                       labelText,
+                       labelFor,
+                       inputTape,
+                       value,
+                       onChange,
+                       name}) => {
     return (
         <>
-            <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">
+            <div className="mb-1">
+                <label htmlFor={labelFor} className="form-label">
                     {labelText}
                 </label>
                 <input
