@@ -22,7 +22,10 @@ const Header = () => {
                    <ul className="navbar-nav flex-row ">
                        <li className='nav-item mx-3'>
                            <p className="nav-link ">
-                               <FaRegCircleUser className="mx-2"/>WELCOME {user?.name} !
+                               <FaRegCircleUser className="mx-2"/>WELCOME {""}
+                               {user?.name || user?.hospitalName || user?.organizationName}{""}
+                               &nbsp;
+                               <span className="badge rounded-pill bg-success">{user?.role}</span>
                            </p>
                        </li>
                        <li className='nav-item mx-3'>
