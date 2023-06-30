@@ -15,6 +15,10 @@ const inventorySchema = new mongoose.Schema({
         type:Number,
         required:[true,'Обов\'язково вкажіть кількість крові'],
     },
+    donorEmail:{
+        type: String,
+        required: [true, "Електронна пошта донора обов\'язкова"]
+    },
     organization:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'users',
@@ -30,9 +34,9 @@ const inventorySchema = new mongoose.Schema({
     donor:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'users',
-        required: function () {
-            return this.inventoryType === "вхід";
-        },
+        //required: function () {
+        //    return this.inventoryType === "вхід";
+       // },
     },
 },
     { timestamps: true }
