@@ -1,15 +1,43 @@
 import React from  'react';
 import {useLocation, Link} from "react-router-dom";
-import {userMenu} from "./Menu/userMenu";
+// import {userMenu} from "./Menu/userMenu";
+
 import '../../../styles/Layout.css';
+import {useSelector} from "react-redux";
 
 const Sidebar = () => {
-    const location = useLocation()
+    //Get user State
+    const {user} = useSelector(state => state.auth)
+    const location = useLocation();
     return (
         <div>
             <div className="sidebar">
                 <div className="menu">
-                    {userMenu.map((menu) => {
+                    {user?.role === 'organization' && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/' && 'active'}`}>
+                                <i className="fa-solid fa-warehouse"></i>
+                                <Link to="/">INVENTORY</Link>
+                            </div>
+                            <div className={`menu-item ${location.pathname === '/donor' && 'active'}`}>
+                                <i className="fa-solid fa-hand-holding-medical"></i>
+                                <Link to="/donor">DONOR</Link>
+                            </div>
+                            <div className={`menu-item ${location.pathname === '/hospital' && 'active'}`}>
+                                <i className="fa-solid fa-house-medical"></i>
+                                <Link to="/hospital">HOSPITAL</Link>
+                            </div>
+                        </>
+                    )}
+                    {(user?.role === 'donor' || user?.role === 'hospital') && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/organization' && 'active'}`}>
+                                <i className="fa-solid fa-building-ngo"></i>
+                                <Link to="/organization">ORGANIZATION</Link>
+                            </div>
+                        </>
+                        )}
+                    {/*{userMenu.map((menu) => {
                        const isActive = location.pathname === menu.path
                        return (
                            <div
@@ -20,7 +48,7 @@ const Sidebar = () => {
                                <Link to={menu.path}>{menu.name}</Link>
                            </div>
                        )
-                    })}
+                    })}*/}
                 </div>
             </div>
         </div>

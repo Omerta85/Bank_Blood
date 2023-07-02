@@ -8,7 +8,7 @@ import inventoryModel from "../models/inventoryModel.js";
 //CREATE Inventory
 const createInventoryController = async(req, res) => {
     try{
-        const { email, inventoryType } = req.body
+        const { email } = req.body
         //validation
         const user = await userModel.findOne({ email })
         if(!user){throw new Error('Користувача не знайдено')}
@@ -25,7 +25,7 @@ const createInventoryController = async(req, res) => {
                     $match:{
                     organization,
                         inventoryType:'вхід',
-                        bloodGroup:requestedBloodGroup
+                        bloodGroup: requestedBloodGroup
                     }},{
                 $group:{
                   _id:'$bloodGroup',
@@ -61,7 +61,7 @@ const createInventoryController = async(req, res) => {
                 return res.status(500).send({
                     success: false,
                     message: `Only ${availableQuanityOfBloodGroup}ML of ${requestedBloodGroup.toUpperCase()} is available`,
-                });
+                })
             }
             req.body.hospital = user?._id;
         } else {
@@ -107,6 +107,112 @@ const getInventoryController = async (req, res) => {
             error
         });
     }
-}
+};
 
-export { createInventoryController, getInventoryController };
+//GET DONOR RECORDS
+const getDonorsController = async (req,res) => {
+    try {
+        const organization = req.body.userId;
+        //find donors
+        const donorId = await inventoryModel.distinct("donor", {
+            organization,
+        });
+        //console.log(donorId)
+        const donors = await userModel.find({_id: {$in: donorId} })
+
+        return res.status(200).send({
+            success:true,
+            message:'Donor Record Fetched Successfully',
+          donors,
+        })
+    }catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success:false,
+            message:'Error in Donor records',
+            error
+        })
+    }
+};
+
+const getHospitalController = async (req,res) => {
+    try{
+        const organization = req.body.userId
+        //Get Hospital ID
+        const hospitalId = await inventoryModel.distinct("hospital", {organization,});
+        //find Hospital
+        const hospital = await userModel.find({
+            _id: { $in: hospitalId},
+        })
+        return res.status(200).send({
+            success: true,
+            message: "Hospitals Data Fetched Successfully",
+            hospital,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success:false,
+            message: 'Error In get Hospital API',
+            error
+        })
+    }
+
+};
+
+// GET ORG
+const getOrganizationController =  async (req,res) => {
+    try{
+        const donor = req.body.userId
+        const orgId = await inventoryModel.distinct('organization', {donor})
+        //find org
+        const organization = await userModel.find({
+            _id:{$in: orgId}
+        })
+        return res.status(200).send({
+            success: true,
+            message:"ORG DATA FETCHED Successfully",
+            organization,
+        })
+    }catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success: false,
+            message:'Error In ORG API',
+            error
+        })
+    }
+};
+
+// GET ORG for Hospital
+const getOrganizationForHospitalController =  async (req,res) => {
+    try{
+        const hospital = req.body.userId
+        const orgId = await inventoryModel.distinct('organization', {hospital})
+        //find org
+        const organization = await userModel.find({
+            _id:{$in: orgId}
+        })
+        return res.status(200).send({
+            success: true,
+            message:"Hospital ORG DATA FETCHED Successfully",
+            organization,
+        })
+    }catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success: false,
+            message:'Error In Hospital ORG API',
+            error
+        })
+    }
+};
+
+export {
+    createInventoryController,
+    getInventoryController,
+    getDonorsController,
+    getHospitalController,
+    getOrganizationController,
+    getOrganizationForHospitalController
+};

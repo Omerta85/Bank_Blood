@@ -82,7 +82,7 @@ const Form = ({formType, submitBtn, formTitle}) => {
                             onChange={(e) => setRole(e.target.value)}
                         />
                         <label htmlFor="organizationRadio" className="form-check-label">
-                            Organization
+                            OrganizationPage
                         </label>
                     </div>
                 </div>
@@ -127,7 +127,7 @@ const Form = ({formType, submitBtn, formTitle}) => {
                                     )}
                                     {role === 'organization' && (
                                         <InputType
-                                            labelText="Organization Name"
+                                            labelText="OrganizationPage Name"
                                             labelFor="forOrganizationName"
                                             inputType="text"
                                             name="organizationName"
