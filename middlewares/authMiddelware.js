@@ -1,3 +1,4 @@
+
 import JWT from 'jsonwebtoken';
 
 const authMiddelware = async (req, res, next) => {
@@ -23,4 +24,4 @@ const authMiddelware = async (req, res, next) => {
         });
     }
 };
- export default authMiddelware;
+ export  default authMiddelware;
