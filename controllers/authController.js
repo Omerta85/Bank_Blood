@@ -1,6 +1,6 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import userModel from "../models/userModel.js";
+const userModel = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const registerController = async(req,res) => {
     try {
@@ -13,8 +13,7 @@ const registerController = async(req,res) => {
             })
         }
         const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-        req.body.password = hashedPassword
+        req.body.password = await bcrypt.hash(req.body.password, salt)
         //rest data
         const user = new userModel(req.body)
         await user.save()
@@ -58,7 +57,7 @@ const  loginController = async (req,res) => {
                 message: 'Невірний пароль'
             })
         }
-        const token = jwt.sign({userId:user._id}, process.env.JWT_SECRET, {expiresIn:'1d'});
+        const token = jwt.sign({userId:user._id}, process.env.JWT_SECRET,{}, {expiresIn:'1d'});
         return res.status(200).send({
             success:true,
             message:"Логанізація успішна",
@@ -94,4 +93,4 @@ const currentUserController = async (req,res) => {
     }
 };
 
-export { registerController, loginController, currentUserController };
+module.exports = { registerController, loginController, currentUserController };

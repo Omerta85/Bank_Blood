@@ -1,11 +1,11 @@
 import React from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import {BiDonateBlood}  from "react-icons/bi"
 import {FaRegCircleUser} from "react-icons/fa6"
 import {useSelector} from "react-redux";
 
 const Header = () => {
-    const{ user } = useSelector((state => state.auth));
+    const{ user } = useSelector((state) => state.auth);
         const navigate = useNavigate();
     //logout handler
     const handleLogout = () => {

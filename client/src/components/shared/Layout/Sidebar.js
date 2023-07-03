@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 
 const Sidebar = () => {
     //Get user State
-    const {user} = useSelector(state => state.auth)
+    const {user} = useSelector((state) => state.auth)
     const location = useLocation();
     return (
         <div>
@@ -37,6 +37,25 @@ const Sidebar = () => {
                             </div>
                         </>
                         )}
+                    {(user?.role === 'hospital') && (
+                        <>
+                            <div className={`menu-item ${location.pathname === '/consumer' && 'active'}`}>
+                                <i className="fa-solid fa-building-ngo"></i>
+                                <Link to="/consumer">CONSUMER</Link>
+                            </div>
+                        </>
+                    )}
+                    {user?.role === "donor" && (
+                        <div
+                            className={`menu-item ${
+                                location.pathname === "/donation" && "active"
+                            }`}
+                        >
+                            <i className="fa-sharp fa-solid fa-building-ngo"></i>
+                            <Link to="/donation">DONATION</Link>
+                        </div>
+                    )}
+
                     {/*{userMenu.map((menu) => {
                        const isActive = location.pathname === menu.path
                        return (
