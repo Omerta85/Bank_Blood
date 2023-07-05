@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation, Link } from "react-router-dom"
 import {BiDonateBlood}  from "react-icons/bi"
 import {FaRegCircleUser} from "react-icons/fa6"
 import {useSelector} from "react-redux";
@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 const Header = () => {
     const{ user } = useSelector((state) => state.auth);
         const navigate = useNavigate();
+        const location = useLocation();
     //logout handler
     const handleLogout = () => {
         localStorage.clear()
@@ -28,6 +29,21 @@ const Header = () => {
                                <span className="badge rounded-pill bg-success">{user?.role}</span>
                            </p>
                        </li>
+                       {
+                           location.pathname === "/" ? (
+                               <li className='nav-item mx-3'>
+                                   <Link  to="/analytics" className="nav-link ">
+                                    ANALYTICS
+                                   </Link>
+                               </li>
+                           ) : (
+                               <li className='nav-item mx-3'>
+                                   <Link  to="/" className="nav-link ">
+                                       HOME
+                                   </Link>
+                               </li>
+                           )
+                       }
                        <li className='nav-item mx-3'>
                            <button className="btn btn-danger" onClick={handleLogout}>LOGOUT</button>
                        </li>

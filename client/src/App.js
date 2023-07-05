@@ -11,6 +11,7 @@ import {Hospital} from "./pages/Dashboard/Hospital";
 import {OrganizationPage} from "./pages/Dashboard/OrganizationPage";
 import {Consumer} from "./pages/Dashboard/Consumer";
 import {Donation} from "./pages/Donation";
+import {Analytics} from "./pages/Dashboard/Analytics";
 
 
 
@@ -19,6 +20,11 @@ function App() {
     <>
         <ToastContainer />
       <Routes>
+          <Route path='/analytics' element={
+              <ProtectedRoute>
+                  <Analytics/>
+              </ProtectedRoute>
+          }/>
           <Route path='/consumer' element={
               <ProtectedRoute>
                   <Consumer/>

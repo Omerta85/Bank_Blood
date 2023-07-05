@@ -8,7 +8,7 @@ import API from "../services/API";
 
 const HomePage = () => {
     const {loading, error} = useSelector((state) => state.auth);
-    const [data,setData] = useState();
+    const [data,setData] = useState([]);
 
     //get function
     const getBloodRecords = async () => {
@@ -25,7 +25,7 @@ const HomePage = () => {
 
     useEffect(() => {
         getBloodRecords();
-    }, [])
+    }, [getBloodRecords])
     return <Layout>
         {error && <span>{alert(error)}</span>}
         {loading ? <Spinner/> : <>
