@@ -25,7 +25,7 @@ const HomePage = () => {
 
     useEffect(() => {
         getBloodRecords();
-    }, [getBloodRecords])
+    }, [])
     return <Layout>
         {error && <span>{alert(error)}</span>}
         {loading ? <Spinner/> : <>

@@ -5,7 +5,7 @@ const bloodGroupDetailsController = async (req,res) => {
     try{
         const bloodGroups = ['I(0+)', 'I(0-)', 'IV(AB+)', 'IV(AB-)', 'II(A+)', 'II(A-)', 'III(B+)','III(B-)'];
         const bloodGroupData = []
-        const organization = new mongoose.Schema.Types.ObjectId(req.body.userId);
+        const organization = new mongoose.Types.ObjectId(req.body.userId);
         //get single blood group
         await Promise.all(bloodGroups.map(async (bloodGroup) => {
             //count Total IN
@@ -57,7 +57,7 @@ const bloodGroupDetailsController = async (req,res) => {
         console.log(error)
         return res.status(500).send({
             success:false,
-            message: "Error In  Bloodgroup Data Analytics Api",
+            message: "Error In  Blood Group Data Analytics Api",
             error,
         })
     }

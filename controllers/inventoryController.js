@@ -23,7 +23,7 @@ const createInventoryController = async(req, res) => {
         if(req.body.inventoryType === 'вихід'){
             const requestedBloodGroup = req.body.bloodGroup;
             const requestedQuantityOfBlood = req.body.quantity;
-            const organization = new mongoose.Schema.Types.ObjectId(req.body.userId)
+            const organization = new mongoose.Types.ObjectId(req.body.userId)
             //calculate Blood Quantity
             const totalInOfRequestedBlood = await inventoryModel.aggregate([
                 {
@@ -137,6 +137,28 @@ const getInventoryHospitalController = async (req, res) => {
         });
     }
 };
+
+
+//GET BLOODrecord of 3
+const getRecentInventoryController = async (req,res) => {
+    try{
+        const inventory = await inventoryModel.find({
+            organization: req.body.userId
+        }).limit(3).sort({createdAT:-1})
+        return res.status(200).send({
+            success:true,
+            message:'recent Inventory Data',
+            inventory
+        })
+    }catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success:false,
+            message: "Error In Recent Inventory API",
+            error
+        })
+    }
+}
 //GET DONOR RECORDS
 const getDonorsController = async (req,res) => {
     try {
@@ -243,5 +265,6 @@ module.exports =  {
     getHospitalController,
     getOrganizationController,
     getOrganizationForHospitalController,
-    getInventoryHospitalController
+    getInventoryHospitalController,
+    getRecentInventoryController
 };
