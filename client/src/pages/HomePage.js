@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 import moment from 'moment'
 import {Spinner} from "../components/shared/Spinner";
 import {Layout} from "../components/shared/Layout/Layout";
 import {Modal} from "../components/shared/modal/Modal";
 import API from "../services/API";
 
-const HomePage = () => {
-    const {loading, error} = useSelector((state) => state.auth);
-    const [data,setData] = useState([]);
 
+const HomePage = () => {
+    const {loading, error, user} = useSelector((state) => state.auth);
+    const [data,setData] = useState([]);
+    const navigate = useNavigate()
     //get function
     const getBloodRecords = async () => {
         try {
@@ -26,10 +28,12 @@ const HomePage = () => {
     useEffect(() => {
         getBloodRecords();
     }, [])
-    return <Layout>
+    return(
+        <Layout>
+        {user?.role === "admin" && navigate("/admin")}
         {error && <span>{alert(error)}</span>}
         {loading ? <Spinner/> : <>
-                <div className="container ">
+            <div className="container ">
                 <h4
                     className='ms-4'
                     data-bs-toggle="modal"
@@ -51,19 +55,21 @@ const HomePage = () => {
                     </thead>
                     <tbody>
                     {data?.map((record) => (
-                    <tr key={record._id}>
-                        <td>{record.bloodGroup}</td>
-                        <td>{record.inventoryType}</td>
-                        <td>{record.quantity} (ML)</td>
-                        <td>{record.email}</td>
-                        <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
-                    </tr>
+                        <tr key={record._id}>
+                            <td>{record.bloodGroup}</td>
+                            <td>{record.inventoryType}</td>
+                            <td>{record.quantity} (ML)</td>
+                            <td>{record.email}</td>
+                            <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
+                        </tr>
                     ))}
                     </tbody>
                 </table>
                 <Modal />
-                </div>
-            </>}
-    </Layout>;
+            </div>
+        </>}
+    </Layout>
+    )
+
 }
 export {HomePage};
