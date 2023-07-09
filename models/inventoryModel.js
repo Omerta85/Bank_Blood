@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose");
 
 const inventorySchema = new mongoose.Schema({
     inventoryType:{
@@ -28,20 +28,20 @@ const inventorySchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'users',
         required: function (){
-            return this.inventoryType === "OUT";
+            return this.inventoryType === "вихід";
         }
     },
     donor:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'users',
         required: function () {
-        return this.inventoryType === "IN";
+        return this.inventoryType === "вхід";
        },
     },
 },
     { timestamps: true }
 )
 
-const inventoryModel = mongoose.model('Inventory', inventorySchema);
 
-export default inventoryModel;
+
+module.exports = mongoose.model("Inventory", inventorySchema);

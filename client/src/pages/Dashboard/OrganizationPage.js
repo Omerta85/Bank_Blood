@@ -7,23 +7,23 @@ import {useSelector} from "react-redux";
 
 const OrganizationPage = () => {
     //get current user
-    const {user} = useSelector(state=>state.auth)
+    const {user} = useSelector((state) => state.auth)
     const[data, setData] =  useState([])
     //find org records
     const getOrg = async() => {
         try {
-            if(user?.role === 'donar'){
+            if(user?.role === 'donor'){
                 const {data} = await API.get('/inventory/get-organization')
                 // console.log(data)
                 if(data?.success){
-                    setData(data?.organization)
+                    setData(data?.organizations)
                 }
             }
             if(user?.role === 'hospital'){
                 const {data} = await API.get('/inventory/get-organization-for-hospital')
                 // console.log(data)
                 if(data?.success){
-                    setData(data?.organization)
+                    setData(data?.organizations)
                 }
             }
         } catch (error) {

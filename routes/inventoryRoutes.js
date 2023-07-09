@@ -1,31 +1,39 @@
-import express from 'express';
-import authMiddelware from "../middlewares/authMiddelware.js";
-import {
+const express = require("express");
+const authMiddleware = require("../middlewares/authMiddleware.js");
+const {
     createInventoryController,
+    getInventoryController,
     getDonorsController,
     getHospitalController,
-    getInventoryController, getOrganizationController, getOrganizationForHospitalController
-} from "../controllers/inventoryController.js";
-
+    getOrganizationController,
+    getOrganizationForHospitalController,
+    getInventoryHospitalController, getRecentInventoryController,
+} = require("../controllers/inventoryController");
 const router = express.Router();
 
 //routes
 //ADD INVENTORY || POST
-router.post('/create-inventory', authMiddelware, createInventoryController);
+router.post('/create-inventory', authMiddleware, createInventoryController);
+
+//GET RECENT BLOOD RECORDS
+router.get('/get-recent-inventory', authMiddleware, getRecentInventoryController);
 
 //GET ALL BLOOD RECORDS
-router.get('/get-inventory', authMiddelware, getInventoryController);
+router.get('/get-inventory', authMiddleware, getInventoryController);
+
+//GET Hospital BLOOD RECORDS
+router.post('/get-inventory-hospital', authMiddleware, getInventoryHospitalController);
 
 //GET Donor RECORDS
-router.get('/get-donors', authMiddelware, getDonorsController)
+router.get('/get-donors', authMiddleware, getDonorsController)
 
 //GET HOSPITAL RECORDS
-router.get('/get-hospital', authMiddelware, getHospitalController)
+router.get('/get-hospital', authMiddleware, getHospitalController)
 
 //GET OrganizationPage RECORDS
-router.get('/get-organization', authMiddelware, getOrganizationController)
+router.get('/get-organization', authMiddleware, getOrganizationController)
 
 //GET OrganizationPage RECORDS
-router.get('/get-organization-for-hospital', authMiddelware, getOrganizationForHospitalController)
+router.get('/get-organization-for-hospital', authMiddleware, getOrganizationForHospitalController)
 
-export default router;
+module.exports = router;

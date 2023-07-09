@@ -9,7 +9,7 @@ const Modal = () => {
     const [bloodGroup, setBloodGroup] = useState('');
     const [quantity, setQuantity] = useState('0');
     const [email, setEmail] = useState('');
-    const{user} = useSelector(state => state.auth)
+    const{user} = useSelector((state) => state.auth);
 
     //handle modal data
     const handleModalSubmit = async () =>{
@@ -65,7 +65,6 @@ const Modal = () => {
                                 <div className="for-check ms-3">
                                     <input type='radio'
                                            name='inRadio'
-                                           defaultChecked
                                            value={'вхід'}
                                            onChange={(e) => setInventoryType(e.target.value)}
                                            className='form-check-input' />

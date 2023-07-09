@@ -82,7 +82,7 @@ const Form = ({formType, submitBtn, formTitle}) => {
                             onChange={(e) => setRole(e.target.value)}
                         />
                         <label htmlFor="organizationRadio" className="form-check-label">
-                            OrganizationPage
+                            Organization
                         </label>
                     </div>
                 </div>

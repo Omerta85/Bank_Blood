@@ -5,4 +5,4 @@ const testController =  (req, res) => {
     });
 };
 
-export default testController;
+module.exports = { testController };
