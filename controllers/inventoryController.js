@@ -175,7 +175,6 @@ const getDonorsController = async (req,res) => {
         const donors = await userModel
             .find({_id: {$in: donorId} })
             .exec();
-
         return res.status(200).send({
             success:true,
             message:'Donor Record Fetched Successfully',
@@ -226,13 +225,13 @@ const getOrganizationController =  async (req,res) => {
             .distinct('organization', {donor})
             .exec();
         //find org
-        const organization = await userModel
+        const organizations = await userModel
             .find({_id:{$in: orgId}})
             .exec();
         return res.status(200).send({
             success: true,
             message:"ORG DATA FETCHED Successfully",
-            organization,
+            organizations,
         })
     }catch (error) {
         console.log(error)
