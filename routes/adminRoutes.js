@@ -1,7 +1,7 @@
 const express = require('express')
 const authMiddleware = require("../middlewares/authMiddleware");
 const adminMiddleware = require("../middlewares/adminMiddleware");
-const {getDonorsListController, getHospitalListController, getOrgListController, deleteDonorController} = require("../controllers/adminController");
+const {getDonorsListController, getHospitalListController, getOrgListController, deleteRecordController} = require("../controllers/adminController");
 
 //router object
 const router = express.Router()
@@ -17,7 +17,7 @@ router.get('/hospital-list',authMiddleware, adminMiddleware, getHospitalListCont
 router.get('/org-list',authMiddleware, adminMiddleware, getOrgListController)
 
 //Delete Donor ||get
-route.delete('/delete-donor/:id',authMiddleware, adminMiddleware, deleteDonorController())
+router.delete('/delete/:id',authMiddleware, adminMiddleware, deleteRecordController)
 
 //EXPORT
 module.exports = router;

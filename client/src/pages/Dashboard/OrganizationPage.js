@@ -16,14 +16,14 @@ const OrganizationPage = () => {
                 const {data} = await API.get('/inventory/get-organization')
                 // console.log(data)
                 if(data?.success){
-                    setData(data?.organization)
+                    setData(data?.organizations)
                 }
             }
             if(user?.role === 'hospital'){
                 const {data} = await API.get('/inventory/get-organization-for-hospital')
                 // console.log(data)
                 if(data?.success){
-                    setData(data?.organization)
+                    setData(data?.organizations)
                 }
             }
         } catch (error) {

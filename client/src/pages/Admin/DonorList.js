@@ -24,12 +24,13 @@ const DonorList = () => {
 
     //delete function
     const handleDelete = async (id) => {
+        try{
         let answer = window.prompt(
-            "Are You SUre Want To Delete This Donor",
+            "Are You SUre Want To Delete This Record",
             "Sure"
         );
         if (!answer) return;
-        const { data } = await API.delete(`/admin/delete-donor/${id}`);
+        const { data } = await API.delete(`/admin/delete/${id}`);
         alert(data?.message);
         window.location.reload();
         }catch (error) {
@@ -57,7 +58,12 @@ const DonorList = () => {
                         <td>{record.phone}</td>
                         <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
                         <td>
-                            <div className="btn btn-danger">DELETE</div>
+                            <button
+                                className="btn btn-danger"
+                                onClick={()=>handleDelete(record._id)}
+                            >
+                                DELETE
+                            </button>
                         </td>
                     </tr>
                 ))}
