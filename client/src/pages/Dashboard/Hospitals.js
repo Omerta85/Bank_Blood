@@ -1,38 +1,37 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from "react";
 import {Layout} from "../../components/shared/Layout/Layout";
 import API from "../../services/API";
 import moment from "moment";
 
-const Hospital = () => {
-    const[data, setData] =  useState([])
+const Hospitals = () => {
+    const [data, setData] = useState([]);
     //find donor records
-    const getHospital = async() => {
+    const getDonors = async () => {
         try {
-            const {data} = await API.get('/inventory/get-hospital')
-            // console.log(data)
-            if(data?.success){
-                setData(data?.hospital)
+            const { data } = await API.get("/inventory/get-hospitals");
+            //   console.log(data);
+            if (data?.success) {
+                setData(data?.hospitals);
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     useEffect(() => {
-        getHospital();
-    }, [])
-
+        getDonors();
+    }, []);
 
     return (
         <Layout>
             <table className="table ">
                 <thead>
                 <tr>
-                    <th scope="col">NAME</th>
-                    <th scope="col">EMAIL</th>
-                    <th scope="col">PHONE</th>
-                    <th scope="col">ADDRESS</th>
-                    <th scope="col">DATE</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,5 +48,6 @@ const Hospital = () => {
             </table>
         </Layout>
     );
-}
-export {Hospital};
+};
+
+export {Hospitals};

@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react";
 import {Layout} from "../../components/shared/Layout/Layout";
 import moment from "moment";
+import { useSelector } from "react-redux";
 import API from "../../services/API";
 
-const OrgList = () => {
+const OrganisationPage = () => {
+    // get current user
+    const { user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
-    //find donor records
-    const getDonors = async () => {
+    //find org records
+    const getOrg = async () => {
         try {
-            const { data } = await API.get("/admin/org-list");
-            console.log(data);
-            if (data?.success) {
-                setData(data?.orgData);
+            if (user?.role === "donor") {
+                const { data } = await API.get("/inventory/get-orgnaisation");
+                //   console.log(data);
+                if (data?.success) {
+                    setData(data?.organisations);
+                }
+            }
+            if (user?.role === "hospital") {
+                const { data } = await API.get(
+                    "/inventory/get-orgnaisation-for-hospital"
+                );
+                //   console.log(data);
+                if (data?.success) {
+                    setData(data?.organisations);
+                }
             }
         } catch (error) {
             console.log(error);
@@ -19,24 +33,8 @@ const OrgList = () => {
     };
 
     useEffect(() => {
-        getDonors();
-    }, []);
-
-    //DELETE FUNCTION
-    const handelDelete = async (id) => {
-        try {
-            let answer = window.prompt(
-                "Are You Sure Want To Delete This Organisation",
-                "Sure"
-            );
-            if (!answer) return;
-            const { data } = await API.delete(`/admin/delete-donor/${id}`);
-            alert(data?.message);
-            window.location.reload();
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        getOrg();
+    }, [user]);
 
     return (
         <Layout>
@@ -46,8 +44,8 @@ const OrgList = () => {
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -56,15 +54,8 @@ const OrgList = () => {
                         <td>{record.organisationName}</td>
                         <td>{record.email}</td>
                         <td>{record.phone}</td>
+                        <td>{record.address}</td>
                         <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
-                        <td>
-                            <button
-                                className="btn btn-danger"
-                                onClick={() => handelDelete(record._id)}
-                            >
-                                Delete
-                            </button>
-                        </td>
                     </tr>
                 ))}
                 </tbody>
@@ -73,4 +64,7 @@ const OrgList = () => {
     );
 };
 
-export {OrgList};
+export {OrganisationPage};
+
+
+

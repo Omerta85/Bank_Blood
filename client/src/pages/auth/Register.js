@@ -10,7 +10,7 @@ const Register = () =>{
     const{loading,error} = useSelector((state) => state.auth);
     return (
         <>
-            {error && <span>{alert(error)}</span>}
+            {error && alert(error)}
             {loading ? (<Spinner/>) : (
                 <div className="row g-0">
                     <div className="col-md-8 form-banner">
